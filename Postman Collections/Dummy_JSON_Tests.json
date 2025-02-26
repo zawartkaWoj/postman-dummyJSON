@@ -194,8 +194,7 @@
 							"pm.test(\"Correct user is logged in\", function () {\r",
 							"    pm.expect(responseBody.username).to.equal(pm.collectionVariables.get(\"userName\"));\r",
 							"    pm.expect(responseBody.password).to.equal(pm.collectionVariables.get(\"userPassword\"));\r",
-							"});\r",
-							""
+							"});"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -218,7 +217,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "264c475e-5051-4bf9-91b4-6fab4dfce4fe",
+				"id": "26ec2c50-f790-4db8-8dd7-9bfa3c2cd247",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
@@ -229,11 +228,13 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "8c3e8484-7221-46c8-b46f-0c2592118610",
+				"id": "fcd6577c-2667-4ca5-ba35-bcd95e50c221",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
-					""
+					"pm.test(\"Response time is less than 500ms\", function() {\r",
+					"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+					"});"
 				]
 			}
 		}
