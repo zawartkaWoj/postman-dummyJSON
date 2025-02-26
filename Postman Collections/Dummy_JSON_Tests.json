@@ -103,7 +103,9 @@
 						"exec": [
 							"const lodash = require('lodash');\r",
 							"\r",
-							"pm.collectionVariables.set(\"randomNum\", lodash.random(1,30));"
+							"pm.collectionVariables.set(\"randomNum\", lodash.random(1,30));\r",
+							"\r",
+							"console.log(pm.collectionVariables.get(\"randomNum\"));"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -138,18 +140,68 @@
 		},
 		{
 			"name": "Log In User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0e7c46b4-dca3-4adf-b569-41db0eaa4818",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set(\"usersToken\", pm.response.json().accessToken);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"id": "f796b11c-877f-467d-8b81-a5dd5350418c",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"{{userName}}\",\r\n    \"password\": \"{{userPassword}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{url}}/auth/login"
 			},
 			"response": []
 		},
 		{
 			"name": "Get Current User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a95baa00-29ae-4cde-a1fc-a302ca1f5bd5",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let responseBody = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Correct user is logged in\", function () {\r",
+							"    pm.expect(responseBody.username).to.equal(pm.collectionVariables.get(\"userName\"));\r",
+							"    pm.expect(responseBody.password).to.equal(pm.collectionVariables.get(\"userPassword\"));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"id": "c34154ca-b65a-4112-9f87-76e6c376883e",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
