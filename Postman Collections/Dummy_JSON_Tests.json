@@ -220,8 +220,8 @@
 					"script": {
 						"id": "a95baa00-29ae-4cde-a1fc-a302ca1f5bd5",
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -238,7 +238,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 1,\r\n    \"firstName\": \"Wojciech\",\r\n    \"lastName\": \"Test\",\r\n}",
+					"raw": "{\r\n    \"id\": 999,\r\n    \"firstName\": \"Wojciech\",\r\n    \"lastName\": \"Test\",\r\n    \"age\": 33\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
