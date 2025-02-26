@@ -213,7 +213,7 @@
 			"response": []
 		},
 		{
-			"name": "Add User",
+			"name": "Add Mock User",
 			"event": [
 				{
 					"listen": "test",
@@ -223,8 +223,6 @@
 							"pm.test(\"Status code is 201\", function () {\r",
 							"    pm.response.to.have.status(201);\r",
 							"});\r",
-							"\r",
-							"pm.collectionVariables.set(\"mockUserId\", pm.response.json().id);\r",
 							"\r",
 							"\r",
 							"\r",
@@ -269,7 +267,7 @@
 			"response": []
 		},
 		{
-			"name": "Update Added User",
+			"name": "Update User",
 			"event": [
 				{
 					"listen": "test",
@@ -342,7 +340,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "8e184e28-88fb-4d6b-b1f9-f25f6509f840",
+				"id": "7eebfbff-ad0f-4901-acfc-c50fbbe4ad36",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
@@ -353,7 +351,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "4396ba28-ef6d-48e0-ba10-d6b0dbe6bb57",
+				"id": "103da477-c319-4cdc-94e8-488af5384b97",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
@@ -371,7 +369,7 @@
 			"type": "string"
 		},
 		{
-			"key": "randomNum",
+			"key": "randomUserId",
 			"value": ""
 		},
 		{
