@@ -7,6 +7,19 @@
 	"item": [
 		{
 			"name": "Test Connection",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a8faaf74-473b-4c47-ba10-45b0d91d7263",
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"id": "57484b9f-3b74-4fee-b21e-cfebc00b59b5",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
