@@ -75,7 +75,7 @@
 						"id": "a8faaf74-473b-4c47-ba10-45b0d91d7263",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
-							"\tpm.response.to.have.status(200);\r",
+							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
 							"const id = pm.collectionVariables.get(\"randomNum\");\r",
@@ -84,9 +84,12 @@
 							"    pm.expect(pm.response.json().id).to.equal(id);\r",
 							"});\r",
 							"\r",
-							"pm.collectionVariables.set(\"userName\", pm.response.json.username);\r",
+							"pm.collectionVariables.set(\"userName\", pm.response.json().username);\r",
 							"\r",
-							"pm.collectionVariables.set(\"userPassword\", pm.response.json.password);\r",
+							"pm.collectionVariables.set(\"userPassword\", pm.response.json().password);\r",
+							"\r",
+							"\r",
+							"\r",
 							""
 						],
 						"type": "text/javascript",
@@ -98,7 +101,9 @@
 					"script": {
 						"id": "9a814bcb-77da-44d8-be5f-1178b8f5badc",
 						"exec": [
-							"pm.collectionVariables.set(\"randomNum\", _.random(1, 30));"
+							"const lodash = require('lodash');\r",
+							"\r",
+							"pm.collectionVariables.set(\"randomNum\", lodash.random(1,30));"
 						],
 						"type": "text/javascript",
 						"packages": {}
