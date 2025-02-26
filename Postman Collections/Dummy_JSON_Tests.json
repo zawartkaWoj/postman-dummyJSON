@@ -336,7 +336,7 @@
 			"response": []
 		},
 		{
-			"name": "Update User Copy",
+			"name": "Delete User",
 			"event": [
 				{
 					"listen": "test",
