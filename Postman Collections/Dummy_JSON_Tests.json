@@ -39,6 +39,13 @@
 					"script": {
 						"id": "a8faaf74-473b-4c47-ba10-45b0d91d7263",
 						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check if there are 30 users returned\", function () {\r",
+							"    pm.expect(pm.response.json().users).to.have.lengthOf(30);\r",
+							"});\r",
 							""
 						],
 						"type": "text/javascript",
@@ -65,6 +72,17 @@
 					"script": {
 						"id": "a8faaf74-473b-4c47-ba10-45b0d91d7263",
 						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"\tpm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const id = pm.collectionVariables.get(\"randomNum\");\r",
+							"\r",
+							"pm.test(\"User ID is equal to randomNum variable\", function () {\r",
+							"    pm.expect(pm.response.json().id).to.equal(id);\r",
+							"});\r",
+							"\r",
+							"\r",
 							""
 						],
 						"type": "text/javascript",
@@ -102,7 +120,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "{{r}}"
+							"value": "{{randomNum}}"
 						}
 					]
 				}
