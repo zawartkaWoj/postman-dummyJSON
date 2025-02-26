@@ -211,6 +211,34 @@
 				"url": "{{url}}/auth/me"
 			},
 			"response": []
+		},
+		{
+			"name": "Get Current User Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a95baa00-29ae-4cde-a1fc-a302ca1f5bd5",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "956f1246-eefb-478f-bfd2-a4606d4154e1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/products"
+			},
+			"response": []
 		}
 	],
 	"event": [
