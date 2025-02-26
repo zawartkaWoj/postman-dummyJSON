@@ -213,7 +213,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Current User Copy",
+			"name": "Add User",
 			"event": [
 				{
 					"listen": "test",
@@ -234,9 +234,18 @@
 				"disableBodyPruning": true
 			},
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
-				"url": "{{url}}/products"
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"firstName\": \"Wojciech\",\r\n    \"lastName\": \"Test\",\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{url}}/users/add"
 			},
 			"response": []
 		}
