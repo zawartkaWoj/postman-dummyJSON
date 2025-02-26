@@ -84,7 +84,9 @@
 							"    pm.expect(pm.response.json().id).to.equal(id);\r",
 							"});\r",
 							"\r",
+							"pm.collectionVariables.set(\"userName\", pm.response.json.username);\r",
 							"\r",
+							"pm.collectionVariables.set(\"userPassword\", pm.response.json.password);\r",
 							""
 						],
 						"type": "text/javascript",
@@ -126,6 +128,18 @@
 						}
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"id": "f796b11c-877f-467d-8b81-a5dd5350418c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": []
 			},
 			"response": []
 		}
