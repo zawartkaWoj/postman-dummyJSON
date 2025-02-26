@@ -1,0 +1,53 @@
+{
+	"info": {
+		"_postman_id": "8d490878-d8e3-46ab-9fb2-631fa62a1381",
+		"name": "JsonTesting",
+		"schema": "https://schema.postman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Test Connection",
+			"id": "57484b9f-3b74-4fee-b21e-cfebc00b59b5",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/test"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "264c475e-5051-4bf9-91b4-6fab4dfce4fe",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "8c3e8484-7221-46c8-b46f-0c2592118610",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://dummyjson.com",
+			"type": "string"
+		}
+	]
+}
