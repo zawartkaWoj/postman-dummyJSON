@@ -222,7 +222,24 @@
 						"exec": [
 							"pm.test(\"Status code is 201\", function () {\r",
 							"    pm.response.to.have.status(201);\r",
-							"});"
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b9e8f9dd-c931-46ea-ba2b-7e6ca73c2d29",
+						"exec": [
+							"const lodash = require('lodash');\r",
+							"\r",
+							"pm.collectionVariables.set(\"randomAge\", lodash.random(18,70));"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -238,7 +255,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 999,\r\n    \"firstName\": \"Wojciech\",\r\n    \"lastName\": \"Test\",\r\n    \"age\": 33\r\n}",
+					"raw": "{\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"age\": {{randomAge}}\r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -296,6 +313,10 @@
 		},
 		{
 			"key": "usersToken",
+			"value": ""
+		},
+		{
+			"key": "randomAge",
 			"value": ""
 		}
 	]
