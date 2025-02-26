@@ -293,9 +293,7 @@
 					"script": {
 						"id": "b9e8f9dd-c931-46ea-ba2b-7e6ca73c2d29",
 						"exec": [
-							"const lodash = require('lodash');\r",
-							"\r",
-							"pm.collectionVariables.set(\"randomAge\", lodash.random(18,70));"
+							""
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -349,9 +347,8 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"User data updates properly\", function() {\r",
-							"    pm.expect(pm.response.json().firstName).to.equal(pm.collectionVariables.get(\"patchName\"));\r",
-							"    pm.expect(pm.response.json().lastName).to.equal(pm.collectionVariables.get(\"patchLastName\"));\r",
+							"pm.test(\"User successfully deleted\", function() {\r",
+							"    pm.expect(pm.response.json().isDeleted).to.equal(true);\r",
 							"});\r",
 							""
 						],
@@ -364,9 +361,7 @@
 					"script": {
 						"id": "b9e8f9dd-c931-46ea-ba2b-7e6ca73c2d29",
 						"exec": [
-							"const lodash = require('lodash');\r",
-							"\r",
-							"pm.collectionVariables.set(\"randomAge\", lodash.random(18,70));"
+							""
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -382,7 +377,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"{{patchName}}\",\r\n    \"lastName\": \"{{patchLastName}}\"\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
