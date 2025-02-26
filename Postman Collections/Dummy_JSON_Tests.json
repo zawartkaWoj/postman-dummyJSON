@@ -58,7 +58,7 @@
 			"response": []
 		},
 		{
-			"name": "Get User by ID",
+			"name": "Get User With Randomized ID",
 			"event": [
 				{
 					"listen": "test",
@@ -66,6 +66,17 @@
 						"id": "a8faaf74-473b-4c47-ba10-45b0d91d7263",
 						"exec": [
 							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9a814bcb-77da-44d8-be5f-1178b8f5badc",
+						"exec": [
+							"pm.collectionVariables.set(\"randomNum\", _.random(1, 30));"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -91,7 +102,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": ""
+							"value": "{{r}}"
 						}
 					]
 				}
@@ -128,6 +139,10 @@
 			"key": "url",
 			"value": "https://dummyjson.com",
 			"type": "string"
+		},
+		{
+			"key": "randomNum",
+			"value": ""
 		}
 	]
 }
