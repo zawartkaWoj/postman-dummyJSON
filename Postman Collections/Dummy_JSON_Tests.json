@@ -224,6 +224,8 @@
 							"    pm.response.to.have.status(201);\r",
 							"});\r",
 							"\r",
+							"pm.collectionVariables.set(\"mockUserId\", pm.response.json().id);\r",
+							"\r",
 							"\r",
 							"\r",
 							""
@@ -255,7 +257,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"age\": {{randomAge}}\r\n    }",
+					"raw": "{\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"age\": {{randomAge}}\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -265,13 +267,82 @@
 				"url": "{{url}}/users/add"
 			},
 			"response": []
+		},
+		{
+			"name": "Update Added User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a95baa00-29ae-4cde-a1fc-a302ca1f5bd5",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b9e8f9dd-c931-46ea-ba2b-7e6ca73c2d29",
+						"exec": [
+							"const lodash = require('lodash');\r",
+							"\r",
+							"pm.collectionVariables.set(\"randomAge\", lodash.random(18,70));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "d53024ae-70e2-482b-bdd7-675d381cad03",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"age\": {{randomAge}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/:id",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "26ec2c50-f790-4db8-8dd7-9bfa3c2cd247",
+				"id": "8e184e28-88fb-4d6b-b1f9-f25f6509f840",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
@@ -282,7 +353,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "fcd6577c-2667-4ca5-ba35-bcd95e50c221",
+				"id": "4396ba28-ef6d-48e0-ba10-d6b0dbe6bb57",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
@@ -317,7 +388,13 @@
 		},
 		{
 			"key": "randomAge",
-			"value": ""
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "mockUserId",
+			"value": "",
+			"type": "string"
 		}
 	]
 }
