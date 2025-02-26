@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "8d490878-d8e3-46ab-9fb2-631fa62a1381",
-		"name": "JsonTesting",
+		"name": "Tests",
 		"schema": "https://schema.postman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
@@ -162,6 +162,14 @@
 		},
 		{
 			"key": "randomNum",
+			"value": ""
+		},
+		{
+			"key": "userName",
+			"value": ""
+		},
+		{
+			"key": "userPassword",
 			"value": ""
 		}
 	]
