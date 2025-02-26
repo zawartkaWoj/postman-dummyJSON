@@ -132,8 +132,20 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "Authenticate User",
 			"id": "f796b11c-877f-467d-8b81-a5dd5350418c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Authenticate User Copy",
+			"id": "c34154ca-b65a-4112-9f87-76e6c376883e",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
