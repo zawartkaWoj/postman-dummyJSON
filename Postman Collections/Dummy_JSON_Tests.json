@@ -274,9 +274,14 @@
 					"script": {
 						"id": "a95baa00-29ae-4cde-a1fc-a302ca1f5bd5",
 						"exec": [
-							"pm.test(\"Status code is 201\", function () {\r",
-							"    pm.response.to.have.status(201);\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
 							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"First Name and Last Name fields update properly\")\r",
+							"\r",
+							"\r",
 							"\r",
 							"\r",
 							"\r",
@@ -309,7 +314,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"age\": {{randomAge}}\r\n}",
+					"raw": "{\r\n    \"firstName\": \"{{patchName}}\",\r\n    \"lastName\": \"{{patchLastName}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -328,7 +333,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": ""
+							"value": "{{randomUserId}}"
 						}
 					]
 				}
