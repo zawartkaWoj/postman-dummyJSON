@@ -144,14 +144,15 @@
 			"response": []
 		},
 		{
-			"name": "Authenticate User",
+			"name": "Get Current User",
 			"id": "c34154ca-b65a-4112-9f87-76e6c376883e",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": "{{url}}/auth/me"
 			},
 			"response": []
 		}
