@@ -58,7 +58,7 @@
 			"response": []
 		},
 		{
-			"name": "Get User With Randomized ID",
+			"name": "Get User With Random ID",
 			"event": [
 				{
 					"listen": "test",
