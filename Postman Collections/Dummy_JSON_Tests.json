@@ -278,7 +278,7 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"First Name and Last Name fields update properly\", function() {\r",
+							"pm.test(\"User data updates properly\", function() {\r",
 							"    pm.expect(pm.response.json().firstName).to.equal(pm.collectionVariables.get(\"patchName\"));\r",
 							"    pm.expect(pm.response.json().lastName).to.equal(pm.collectionVariables.get(\"patchLastName\"));\r",
 							"});\r",
@@ -308,6 +308,77 @@
 			},
 			"request": {
 				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"{{patchName}}\",\r\n    \"lastName\": \"{{patchLastName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/:id",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{randomUserId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a95baa00-29ae-4cde-a1fc-a302ca1f5bd5",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"User data updates properly\", function() {\r",
+							"    pm.expect(pm.response.json().firstName).to.equal(pm.collectionVariables.get(\"patchName\"));\r",
+							"    pm.expect(pm.response.json().lastName).to.equal(pm.collectionVariables.get(\"patchLastName\"));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b9e8f9dd-c931-46ea-ba2b-7e6ca73c2d29",
+						"exec": [
+							"const lodash = require('lodash');\r",
+							"\r",
+							"pm.collectionVariables.set(\"randomAge\", lodash.random(18,70));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "25b6b441-cc84-4057-a27b-ae736954881f",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
 				"header": [],
 				"body": {
 					"mode": "raw",
