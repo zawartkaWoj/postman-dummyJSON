@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "8d490878-d8e3-46ab-9fb2-631fa62a1381",
-		"name": "Tests",
+		"name": "Dummy JSON",
 		"schema": "https://schema.postman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
@@ -400,6 +400,18 @@
 						}
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Products",
+			"id": "20e14cda-5936-43ba-af67-7a5c39ff0384",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": []
 			},
 			"response": []
 		}
