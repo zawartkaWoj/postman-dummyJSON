@@ -11,10 +11,26 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a8faaf74-473b-4c47-ba10-45b0d91d7263",
+						"id": "23d8bf6a-9397-4151-89f9-2f7e45d42ee1",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"    if (pm.response.code !== 200) {\r",
+							"        pm.expect.fail(\"Skipping next tests as the status code is not 200\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is JSON\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is not empty\", function () {\r",
+							"    pm.expect(pm.response.text()).to.not.be.empty;\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -39,14 +55,43 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a8faaf74-473b-4c47-ba10-45b0d91d7263",
+						"id": "80f3759f-993a-4790-b235-bc87ffd6d94d",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"Check if there are 30 users returned\", function () {\r",
+							"pm.test(\"All users returned successfully\", function () {\r",
 							"    pm.expect(pm.response.json().users).to.have.lengthOf(30);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is JSON\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is not empty\", function () {\r",
+							"    pm.expect(pm.response.text()).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"User list is not empty\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.users.length).to.be.greaterThan(0);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"First user has required fields\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    if (jsonData.users.length > 0) {\r",
+							"        let firstUser = jsonData.users[0];\r",
+							"        pm.expect(firstUser).to.have.property(\"id\");\r",
+							"        pm.expect(firstUser).to.have.property(\"firstName\");\r",
+							"        pm.expect(firstUser).to.have.property(\"email\");\r",
+							"        pm.expect(firstUser.id).to.be.a(\"number\");\r",
+							"        pm.expect(firstUser.firstName).to.be.a(\"string\");\r",
+							"        pm.expect(firstUser.email).to.include(\"@\");\r",
+							"    } else {\r",
+							"        pm.fail(\"User list is empty, cannot check required fields\");\r",
+							"    }\r",
 							"});\r",
 							""
 						],
@@ -70,18 +115,55 @@
 			"name": "Get User With Random ID",
 			"event": [
 				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5b80bf0a-6f88-44c7-869f-604cc2d16816",
+						"exec": [
+							"const lodash = require('lodash');\r",
+							"\r",
+							"pm.collectionVariables.set(\"randomUserId\", lodash.random(1,30));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
 					"listen": "test",
 					"script": {
-						"id": "a8faaf74-473b-4c47-ba10-45b0d91d7263",
+						"id": "50aac457-65e6-483d-99ec-b77d6087cac6",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"const id = pm.collectionVariables.get(\"randomNum\");\r",
+							"const id = pm.collectionVariables.get(\"randomUserId\");\r",
 							"\r",
 							"pm.test(\"User ID is equal to randomNum variable\", function () {\r",
 							"    pm.expect(pm.response.json().id).to.equal(id);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is JSON\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is not empty\", function () {\r",
+							"    pm.expect(pm.response.text()).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"User has required fields\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"id\").that.is.a(\"number\");\r",
+							"    pm.expect(jsonData).to.have.property(\"firstName\").that.is.a(\"string\");\r",
+							"    pm.expect(jsonData).to.have.property(\"email\").that.is.a(\"string\").and.includes(\"@\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"User age is valid (if exists)\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    if (jsonData.age) {\r",
+							"        pm.expect(jsonData.age).to.be.a(\"number\");\r",
+							"        pm.expect(jsonData.age).to.be.above(0);\r",
+							"    }\r",
 							"});\r",
 							"\r",
 							"pm.collectionVariables.set(\"userName\", pm.response.json().username);\r",
@@ -91,21 +173,6 @@
 							"\r",
 							"\r",
 							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "9a814bcb-77da-44d8-be5f-1178b8f5badc",
-						"exec": [
-							"const lodash = require('lodash');\r",
-							"\r",
-							"pm.collectionVariables.set(\"randomNum\", lodash.random(1,30));\r",
-							"\r",
-							"console.log(pm.collectionVariables.get(\"randomNum\"));"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -131,7 +198,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "{{randomNum}}"
+							"value": "{{randomUserId}}"
 						}
 					]
 				}
@@ -144,13 +211,39 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "0e7c46b4-dca3-4adf-b569-41db0eaa4818",
+						"id": "2a578350-f9df-4def-8bd5-504ffd16f54f",
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
+							"pm.test(\"Status code is 200\", function() {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"pm.collectionVariables.set(\"usersToken\", pm.response.json().accessToken);"
+							"pm.test(\"Content-Type is JSON\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is not empty\", function () {\r",
+							"    pm.expect(pm.response.text()).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains access token\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"accessToken\");\r",
+							"    pm.expect(jsonData.accessToken).to.be.a(\"string\");\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set(\"usersToken\", pm.response.json().accessToken);\r",
+							"\r",
+							"pm.test(\"Response contains user details\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"    pm.expect(jsonData).to.have.property(\"username\");\r",
+							"    pm.expect(jsonData).to.have.property(\"email\");\r",
+							"    pm.expect(jsonData.id).to.be.a(\"number\");\r",
+							"    pm.expect(jsonData.username).to.be.a(\"string\");\r",
+							"    pm.expect(jsonData.email).to.include(\"@\");\r",
+							"});\r",
+							""
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -191,10 +284,31 @@
 							"\r",
 							"let responseBody = pm.response.json();\r",
 							"\r",
+							"pm.test(\"Content-Type is JSON\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is not empty\", function () {\r",
+							"    pm.expect(pm.response.text()).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains user details\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"    pm.expect(jsonData).to.have.property(\"username\");\r",
+							"    pm.expect(jsonData).to.have.property(\"email\");\r",
+							"    pm.expect(jsonData.id).to.be.a(\"number\");\r",
+							"    pm.expect(jsonData.username).to.be.a(\"string\");\r",
+							"    pm.expect(jsonData.email).to.include(\"@\");\r",
+							"});\r",
+							"\r",
 							"pm.test(\"Correct user is logged in\", function () {\r",
 							"    pm.expect(responseBody.username).to.equal(pm.collectionVariables.get(\"userName\"));\r",
 							"    pm.expect(responseBody.password).to.equal(pm.collectionVariables.get(\"userPassword\"));\r",
-							"});"
+							"});\r",
+							"\r",
+							""
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -224,8 +338,28 @@
 							"    pm.response.to.have.status(201);\r",
 							"});\r",
 							"\r",
+							"pm.test(\"Content-Type is JSON\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
 							"\r",
+							"pm.test(\"Response body is not empty\", function () {\r",
+							"    pm.expect(pm.response.text()).to.not.be.empty;\r",
+							"});\r",
 							"\r",
+							"pm.test(\"Response contains added user details\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"    pm.expect(jsonData).to.have.property(\"firstName\");\r",
+							"    pm.expect(jsonData).to.have.property(\"lastName\");\r",
+							"    pm.expect(jsonData).to.have.property(\"age\");\r",
+							"    pm.expect(jsonData).to.have.property(\"email\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"User email is valid\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.email).to.include(\"@\");\r",
+							"});\r",
 							""
 						],
 						"type": "text/javascript",
@@ -255,7 +389,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"age\": {{randomAge}}\r\n}",
+					"raw": "{\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"age\": {{randomAge}},\r\n    \"email\": \"{{$randomEmail}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -282,6 +416,22 @@
 							"    pm.expect(pm.response.json().firstName).to.equal(pm.collectionVariables.get(\"patchName\"));\r",
 							"    pm.expect(pm.response.json().lastName).to.equal(pm.collectionVariables.get(\"patchLastName\"));\r",
 							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is JSON\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is not empty\", function () {\r",
+							"    pm.expect(pm.response.text()).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains user ID\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"});\r",
+							"\r",
+							"\r",
 							""
 						],
 						"type": "text/javascript",
@@ -347,10 +497,20 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"User successfully deleted\", function() {\r",
-							"    pm.expect(pm.response.json().isDeleted).to.equal(true);\r",
+							"pm.test(\"Content-Type is JSON\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
 							"});\r",
-							""
+							"\r",
+							"pm.test(\"Response body is not empty\", function () {\r",
+							"    pm.expect(pm.response.text()).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"User deletion confirmation\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"    pm.expect(jsonData).to.have.property(\"isDeleted\", true);\r",
+							"});"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -413,6 +573,53 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is JSON\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is not empty\", function () {\r",
+							"    pm.expect(pm.response.text()).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains 'products' key\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"products\");\r",
+							"    pm.expect(jsonData.products).to.be.an(\"array\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Product list is not empty\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.products.length).to.be.greaterThan(0);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"First product has required fields\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    if (jsonData.products.length > 0) {\r",
+							"        let firstProduct = jsonData.products[0];\r",
+							"        pm.expect(firstProduct).to.have.property(\"id\").that.is.a(\"number\");\r",
+							"        pm.expect(firstProduct).to.have.property(\"title\").that.is.a(\"string\");\r",
+							"        pm.expect(firstProduct).to.have.property(\"price\").that.is.a(\"number\");\r",
+							"    } else {\r",
+							"        pm.fail(\"Product list is empty, cannot check required fields\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Product IDs are unique\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    let productIds = jsonData.products.map(product => product.id);\r",
+							"    let uniqueIds = new Set(productIds);\r",
+							"    pm.expect(productIds.length).to.eql(uniqueIds.size);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Product prices are valid\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.products.forEach(product => {\r",
+							"        pm.expect(product.price).to.be.a(\"number\");\r",
+							"        pm.expect(product.price).to.be.above(0);\r",
+							"    });\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -437,11 +644,36 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "e3a7cd7c-3acb-4c62-b9b6-bff3369e8662",
+						"id": "48fcd238-c04f-46ff-a703-afde7df16826",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
-							"});"
+							"});\r",
+							"\r",
+							"pm.test(\"Number of products returned equals limit\", function () {\r",
+							"    pm.expect(pm.response.json().products.length).to.equal(pm.response.json().limit);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is JSON\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is not empty\", function () {\r",
+							"    pm.expect(pm.response.text()).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Number of returned products matches limit\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.products.length).to.be.at.most(10);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Products IDs are within the given range\", function () {\r",
+							"    pm.response.json().products.forEach(function(product) {\r",
+							"        pm.expect(product.id).to.be.within(pm.response.json().skip + 1, pm.response.json().limit + pm.response.json().skip);\r",
+							"    });\r",
+							"});\r",
+							""
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -455,7 +687,26 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "{{url}}/products"
+				"url": {
+					"raw": "{{url}}/products/?limit=10&skip=7",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"products",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "skip",
+							"value": "7"
+						}
+					]
+				}
 			},
 			"response": []
 		}
@@ -522,6 +773,10 @@
 			"key": "patchLastName",
 			"value": "",
 			"type": "string"
+		},
+		{
+			"key": "randomNum",
+			"value": ""
 		}
 	]
 }
