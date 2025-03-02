@@ -405,13 +405,57 @@
 		},
 		{
 			"name": "Get All Products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e3a7cd7c-3acb-4c62-b9b6-bff3369e8662",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"id": "20e14cda-5936-43ba-af67-7a5c39ff0384",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": "{{url}}/products"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Products Limit And Skip",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e3a7cd7c-3acb-4c62-b9b6-bff3369e8662",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "fecb88d1-9a88-4d18-9102-20908ff4b371",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/products"
 			},
 			"response": []
 		}
